@@ -31,7 +31,7 @@ public class GameScreen implements Screen {
     
 
     public GameScreen(Game g) {
-        Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
+        //Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
         width=Gdx.graphics.getDisplayMode().width;
         height=Gdx.graphics.getDisplayMode().height;
         movable=new boolean[width][height];
@@ -39,7 +39,7 @@ public class GameScreen implements Screen {
         s=new Stage(new ScreenViewport());
         map=new Texture("map.png");
         mask=new Texture("mask.png");
-        img=new Texture("badlogic.jpg");
+        img=new Texture("goofy.jpg");
         go=new GameObject(img);
         TextureData td=mask.getTextureData();
         td.prepare();
@@ -50,7 +50,7 @@ public class GameScreen implements Screen {
                 Color c=new Color();
                 Color.rgba8888ToColor(c, maskpix.getPixel(i, height-j));
                 movable[i][j]=c.equals(Color.BLACK)?false:true;
-         }
+            }
         }
         System.out.println(Color.CLEAR.toString()+"\n"+Color.BLACK.toString());
         
@@ -74,7 +74,7 @@ public class GameScreen implements Screen {
 	Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 	s.getBatch().begin();
 	s.getBatch().draw(map, 0, 0);
-        //s.getBatch().draw(mask, 0, 0);
+        s.getBatch().draw(mask, 0, 0);
         go.draw((SpriteBatch) s.getBatch());
                 
 	s.getBatch().end();
