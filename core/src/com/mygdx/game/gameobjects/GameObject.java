@@ -25,69 +25,18 @@ public class GameObject {
     }
     public void draw(SpriteBatch batch){
         int totalX=x+width, totalY=y+height;
-        if(move[RIGHT]   /*&&(totalX<(Gdx.graphics.getWidth())) && y>0*/ ){/*
-            if(GameScreen.movable[totalX+1][y]){
+        if(move[RIGHT]){
+            if(totalX<Gdx.graphics.getWidth() && GameScreen.movable[totalX+1][y] )
                 x++;
-            }else if(GameScreen.movable[totalX+1][y+2] && !GameScreen.movable[totalX+1][y-1]){
-                x++;
-                //y+=2;
-                y++;
-            }else if(!GameScreen.movable[totalX+1][y+2] && GameScreen.movable[totalX+1][y-1]){
-                x++;
-                //y-=2;
-                y--;
-            }*/
-            x++;
         }
         
-        if(move[LEFT] /*&& (x>0) && y>0*/){/*
-            if(GameScreen.movable[x-1][y]){
-                x--;
-            }else if(GameScreen.movable[x-1][y+2] && !GameScreen.movable[x-1][y-1]){
-                x--;
-                //y+=2;
-                y++;
-            }else if(!GameScreen.movable[x-1][y+2] && GameScreen.movable[x-1][y-1]){
-                x--;
-                //y-=2;
-                y--;
-            }*/
+        if(move[LEFT] ){
             x--;
         }
-        if(move[UP]    /*&& totalY<Gdx.graphics.getHeight() && x>0*/ ){/*
-            boolean canMoveUp=true;
-            for(int i=x;canMoveUp && i<totalX;x++){
-                canMoveUp=GameScreen.movable[i][totalY+1];
-            }
-            if(canMoveUp){
-                y++;
-            }else if(GameScreen.movable[x+2][totalY+1] && !GameScreen.movable[x-1][totalY+1]){
-                //x+=2;
-                x++;
-                y++;
-            }else if(!GameScreen.movable[x+2][totalY+1] && GameScreen.movable[x-1][totalY+1]){
-                //x-=2;
-                x--;
-                y++;
-            }*/
+        if(move[UP]){
             y++;
         }
-        if(move[DOWN] /*&& y>0 && x>0*/){
-            /*boolean canMoveDown=true;
-            for(int i=x;canMoveDown && i<totalX+1;x++){
-                canMoveDown=GameScreen.movable[i][y-1];
-            }
-            if(canMoveDown){
-                y--;
-            }else if(GameScreen.movable[x+2][y-1] && !GameScreen.movable[x-1][y-1]){
-                //x+=2;
-                x++;
-                y--;
-            }else if(!GameScreen.movable[x+2][y-1] && GameScreen.movable[x-1][y-1]){
-                //x-=2;
-                x--;
-                y--;
-            }*/
+        if(move[DOWN] ){
             y--;
         }
         if(x<0) x=0;

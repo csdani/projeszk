@@ -31,10 +31,7 @@ public class GameScreen implements Screen {
     
 
     public GameScreen(Game g) {
-        //Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
-        width=Gdx.graphics.getDisplayMode().width;
-        height=Gdx.graphics.getDisplayMode().height;
-        movable=new boolean[width][height];
+        Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
         game=g;
         s=new Stage(new ScreenViewport());
         map=new Texture("map.png");
@@ -44,6 +41,9 @@ public class GameScreen implements Screen {
         TextureData td=mask.getTextureData();
         td.prepare();
         maskpix=td.consumePixmap();
+        width=mask.getWidth();
+        height=mask.getHeight();
+        movable=new boolean[width][height];
         
         for(int i=0;i<width;i++){
             for(int j=0;j<height;j++){
