@@ -1,13 +1,14 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
+import com.mygdx.game.screens.MenuScreen;
 import com.mygdx.game.screens.MintaScreen;
 
 public class RoidRage extends Game{
 	
 	@Override
 	public void create () {
-            setScreen(new MintaScreen(this));  
+            setScreen(new MenuScreen(this));
 	}
  
 	@Override
