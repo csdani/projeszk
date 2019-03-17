@@ -41,7 +41,6 @@ public class MenuScreen implements Screen {
         TextButton leaderboardButton = new TextButton("Leaderboard", skin);
         TextButton exitButton = new TextButton("Exit", skin);
 
-        /*
         playButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -54,7 +53,7 @@ public class MenuScreen implements Screen {
                 ((Game)Gdx.app.getApplicationListener()).setScreen(new LeaderboardScreen());
             }
         });
-        */
+
         exitButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
