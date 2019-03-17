@@ -4,13 +4,18 @@ package com.mygdx.game.utilities;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.mygdx.game.gameobjects.GameObject;
-import static com.mygdx.game.gameobjects.GameObject.*;
 import static java.lang.System.exit;
 
 public class InputHandler implements InputProcessor {
+
+    public static final int LEFT =0;
+    public static final int UP =1;
+    public static final int RIGHT =2;
+    public static final int DOWN =3;
+
     InputType inputType;
-    public InputHandler(){
-    }
+
+    public InputHandler(){}
     @Override
     public boolean keyDown(int i) {
         if(i==Input.Keys.ESCAPE) exit(0);
