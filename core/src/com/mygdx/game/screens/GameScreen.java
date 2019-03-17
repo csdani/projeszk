@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.gameobjects.GameObject;
+import com.mygdx.game.gameobjects.Player;
 import com.mygdx.game.utilities.*;
 
 public class GameScreen implements Screen {
@@ -22,42 +23,41 @@ public class GameScreen implements Screen {
     Texture mask;
     Texture img;
     public static boolean movable[][];
-    int width,height;
+    int width, height;
     Pixmap maskpix;
-    int firstX=0;
-    int firstY=0;
+    int firstX = 0;
+    int firstY = 0;
     GameObject go;
-    
-    
+
 
     public GameScreen(Game g) {
         Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
-        game=g;
-        s=new Stage(new ScreenViewport());
-        map=new Texture("map.png");
-        mask=new Texture("mask.png");
-        img=new Texture("goofy.jpg");
-        go=new GameObject(img);
-        TextureData td=mask.getTextureData();
+        game = g;
+        s = new Stage(new ScreenViewport());
+        map = new Texture("core/assets/map.png");
+        mask = new Texture("core/assets/mask.png");
+        img = new Texture("core/assets/goofy.jpg");
+        go = new Player(img);
+        TextureData td = mask.getTextureData();
         td.prepare();
-        maskpix=td.consumePixmap();
-        width=mask.getWidth();
-        height=mask.getHeight();
-        movable=new boolean[width][height];
-        
-        for(int i=0;i<width;i++){
-            for(int j=0;j<height;j++){
-                Color c=new Color();
-                Color.rgba8888ToColor(c, maskpix.getPixel(i, height-j));
-                movable[i][j]=c.equals(Color.BLACK)?false:true;
+        maskpix = td.consumePixmap();
+        width = mask.getWidth();
+        height = mask.getHeight();
+        movable = new boolean[width][height];
+
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                Color c = new Color();
+                Color.rgba8888ToColor(c, maskpix.getPixel(i, height - j));
+                movable[i][j] = !c.equals(Color.BLACK);
             }
         }
-        System.out.println(Color.CLEAR.toString()+"\n"+Color.BLACK.toString());
-        
-        for(int i=0;firstX==0 && i<width;i++){
+        System.out.println(Color.CLEAR.toString() + "\n" + Color.BLACK.toString());
+
+        for (int i = 0; firstX == 0 && i < width; i++) {
             System.out.println(movable[i][firstY]);
-            if(movable[i][firstY]){
-                firstX=i;
+            if (movable[i][firstY]) {
+                firstX = i;
             }
         }
         go.setPos(firstX, firstY);
@@ -71,13 +71,13 @@ public class GameScreen implements Screen {
     @Override
     public void render(float f) {
         Gdx.gl.glClearColor(1, 0, 0, 1);
-	Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-	s.getBatch().begin();
-	s.getBatch().draw(map, 0, 0);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        s.getBatch().begin();
+        s.getBatch().draw(map, 0, 0);
         s.getBatch().draw(mask, 0, 0);
         go.draw((SpriteBatch) s.getBatch());
-                
-	s.getBatch().end();
+
+        s.getBatch().end();
     }
 
     @Override
@@ -99,10 +99,10 @@ public class GameScreen implements Screen {
     @Override
     public void dispose() {
         s.dispose();
-	map.dispose();
-	mask.dispose();
+        map.dispose();
+        mask.dispose();
         img.dispose();
         maskpix.dispose();
     }
-    
+
 }
