@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -37,6 +38,7 @@ public class MenuScreen implements Screen {
         table.setFillParent(true);
         table.center();
 
+        Label titleLabel = new Label("Main menu", skin);
         TextButton playButton = new TextButton("Play", skin);
         TextButton leaderboardButton = new TextButton("Leaderboard", skin);
         TextButton exitButton = new TextButton("Exit", skin);
@@ -61,11 +63,13 @@ public class MenuScreen implements Screen {
             }
         });
 
-        table.add(playButton).width(Gdx.graphics.getWidth() / 12).height(Gdx.graphics.getHeight() / 18).pad(20);
+        table.add(titleLabel).padBottom(30);
         table.row();
-        table.add(leaderboardButton).width(Gdx.graphics.getWidth() / 12).height(Gdx.graphics.getHeight() / 18).pad(20);
+        table.add(playButton).prefWidth(Gdx.graphics.getWidth() / 12).prefHeight(Gdx.graphics.getHeight() / 18).minWidth(50).minHeight(30).pad(20);
         table.row();
-        table.add(exitButton).width(Gdx.graphics.getWidth() / 12).height(Gdx.graphics.getHeight() / 18).pad(20);
+        table.add(leaderboardButton).prefWidth(Gdx.graphics.getWidth() / 12).prefHeight(Gdx.graphics.getHeight() / 18).minWidth(110).minHeight(30).pad(20);
+        table.row();
+        table.add(exitButton).prefWidth(Gdx.graphics.getWidth() / 12).prefHeight(Gdx.graphics.getHeight() / 18).minWidth(50).minHeight(30).pad(20);
 
         stage.addActor(table);
 
