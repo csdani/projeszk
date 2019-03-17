@@ -5,12 +5,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Enemy extends GameObject {
 
-    Enemy(Texture i) {
+    public Enemy(Texture i) {
         super(i);
     }
 
     @Override
     public void draw(SpriteBatch batch) {
-
+        batch.draw(img, pos.getX(), pos.getY());
     }
 }

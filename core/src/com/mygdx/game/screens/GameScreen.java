@@ -2,7 +2,6 @@ package com.mygdx.game.screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Graphics.DisplayMode;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -12,22 +11,42 @@ import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+
+import com.mygdx.game.gameobjects.Enemy;
 import com.mygdx.game.gameobjects.GameObject;
+import com.mygdx.game.gameobjects.Loot;
 import com.mygdx.game.gameobjects.Player;
-import com.mygdx.game.utilities.*;
+import com.mygdx.game.gameobjects.Vendor;
+import com.mygdx.game.utilities.InputHandler;
+import com.mygdx.game.utilities.Position;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 
 public class GameScreen implements Screen {
     Game game;
     Stage s;
     Texture map;
     Texture mask;
-    Texture img;
+    Texture playerImage;
+    Texture enemyImage;
+    Texture lootImage;
+    Texture vendorImage;
+
     public static boolean movable[][];
     int width, height;
     Pixmap maskpix;
     int firstX = 0;
     int firstY = 0;
-    GameObject go;
+    GameObject player;
+    GameObject enemy;
+    GameObject loot;
+    private GameObject vendor;
+
+    Random rand;
+
 
 
     public GameScreen(Game g) {
@@ -36,8 +55,17 @@ public class GameScreen implements Screen {
         s = new Stage(new ScreenViewport());
         map = new Texture("core/assets/map.png");
         mask = new Texture("core/assets/mask.png");
-        img = new Texture("core/assets/goofy.jpg");
-        go = new Player(img);
+        playerImage = new Texture("core/assets/goofy.jpg");
+        enemyImage = new Texture("core/assets/enemy.png");
+        lootImage = new Texture("core/assets/loot.png");
+        vendorImage = new Texture("core/assets/vendor.png");
+        player = new Player(playerImage);
+        enemy = new Enemy(enemyImage);
+        loot = new Loot(lootImage);
+        vendor = new Vendor(vendorImage);
+
+        rand = new Random();
+
         TextureData td = mask.getTextureData();
         td.prepare();
         maskpix = td.consumePixmap();
@@ -60,7 +88,25 @@ public class GameScreen implements Screen {
                 firstX = i;
             }
         }
-        go.setPos(firstX, firstY);
+
+        int n = rand.nextInt(50);
+
+        List<Position> possiblePositions = new ArrayList<Position>();
+
+        for (int i = 0; i < movable.length; i++) {
+            for (int j = 0; j < movable[i].length; j++) {
+                if (movable[i][j]) {
+                    Position pos = new Position(i,j);
+                    possiblePositions.add(pos);
+                }
+
+            }
+        }
+
+        player.setPos(firstX, firstY);
+        loot.setPos(possiblePositions.get(rand.nextInt(possiblePositions.size()-1)).getX(),
+                possiblePositions.get(rand.nextInt(possiblePositions.size()-1)).getY());
+        enemy.setPos(firstX+100,firstY+100);
     }
 
     @Override
@@ -75,8 +121,9 @@ public class GameScreen implements Screen {
         s.getBatch().begin();
         s.getBatch().draw(map, 0, 0);
         s.getBatch().draw(mask, 0, 0);
-        go.draw((SpriteBatch) s.getBatch());
-
+        player.draw((SpriteBatch) s.getBatch());
+        enemy.draw((SpriteBatch) s.getBatch());
+        loot.draw((SpriteBatch) s.getBatch());
         s.getBatch().end();
     }
 
@@ -101,7 +148,10 @@ public class GameScreen implements Screen {
         s.dispose();
         map.dispose();
         mask.dispose();
-        img.dispose();
+        playerImage.dispose();
+        enemyImage.dispose();
+        lootImage.dispose();
+        vendorImage.dispose();
         maskpix.dispose();
     }
 

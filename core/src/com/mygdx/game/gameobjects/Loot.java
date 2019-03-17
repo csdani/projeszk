@@ -5,12 +5,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Loot extends GameObject {
 
-    Loot(Texture i) {
+    public Loot(Texture i) {
         super(i);
     }
 
     @Override
     public void draw(SpriteBatch batch) {
-
+        batch.draw(img, pos.getX(), pos.getY());
     }
 }

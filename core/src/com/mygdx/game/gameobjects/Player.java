@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.screens.GameScreen;
+import com.mygdx.game.utilities.InputHandler;
 
 public class Player extends GameObject {
 
@@ -12,24 +13,24 @@ public class Player extends GameObject {
     }
 
     public void draw(SpriteBatch batch) {
-        int totalX = x + width, totalY = y + height;
-        if (move[RIGHT]) {
-            if (totalX < Gdx.graphics.getWidth() && GameScreen.movable[totalX + 1][y])
-                x++;
+        int totalX = pos.getX() + width, totalY = pos.getY() + height;
+        if (move[InputHandler.RIGHT]) {
+            if (totalX < Gdx.graphics.getWidth() && GameScreen.movable[totalX + 1][pos.getY()])
+                pos.setX(pos.getX()+1);
         }
 
-        if (move[LEFT]) {
-            x--;
+        if (move[InputHandler.LEFT]) {
+            pos.setX(pos.getX()-1);
         }
-        if (move[UP]) {
-            y++;
+        if (move[InputHandler.UP]) {
+            pos.setY(pos.getY()+1);
         }
-        if (move[DOWN]) {
-            y--;
+        if (move[InputHandler.DOWN]) {
+            pos.setY(pos.getY()-1);
         }
-        if (x < 0) x = 0;
-        if (y < 0) y = 0;
-        batch.draw(img, x, y);
+        if (pos.getX() < 0) pos.setX(0);
+        if (pos.getY() < 0) pos.setY(0);
+        batch.draw(img, pos.getX(), pos.getY());
     }
 
     public void dispose() {
