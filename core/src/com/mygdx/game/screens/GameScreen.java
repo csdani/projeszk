@@ -40,14 +40,18 @@ public class GameScreen implements Screen {
     Pixmap maskpix;
     int firstX = 0;
     int firstY = 0;
-    GameObject player;
-    GameObject enemy;
-    GameObject loot;
+    private GameObject player;
+    private GameObject enemy;
+    private GameObject loot;
     private GameObject vendor;
+
+    private long startTime = System.nanoTime();
+    private long currentTime;
+    boolean firstLoot = true;
 
     Random rand;
 
-
+    List<Position> possiblePositions = new ArrayList<Position>();
 
     public GameScreen(Game g) {
         Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
@@ -72,12 +76,19 @@ public class GameScreen implements Screen {
         width = mask.getWidth();
         height = mask.getHeight();
         movable = new boolean[width][height];
-
+        //TODO: Correct the loop/ if beacuse it is not working as it is supposed
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 Color c = new Color();
                 Color.rgba8888ToColor(c, maskpix.getPixel(i, height - j));
-                movable[i][j] = !c.equals(Color.BLACK);
+                if (!c.equals(Color.BLACK)) {
+                    movable[i][j] = true;
+                    Position pos = new Position(i, j);
+                    possiblePositions.add(pos);
+                } else {
+                    movable[i][j] = false;
+                }
+
             }
         }
         System.out.println(Color.CLEAR.toString() + "\n" + Color.BLACK.toString());
@@ -89,25 +100,12 @@ public class GameScreen implements Screen {
             }
         }
 
-        int n = rand.nextInt(50);
-
-        List<Position> possiblePositions = new ArrayList<Position>();
-
-        for (int i = 0; i < movable.length; i++) {
-            for (int j = 0; j < movable[i].length; j++) {
-                if (movable[i][j]) {
-                    Position pos = new Position(i,j);
-                    possiblePositions.add(pos);
-                }
-
-            }
-        }
-
         player.setPos(firstX, firstY);
-        loot.setPos(possiblePositions.get(rand.nextInt(possiblePositions.size()-1)).getX(),
-                possiblePositions.get(rand.nextInt(possiblePositions.size()-1)).getY());
-        enemy.setPos(firstX+100,firstY+100);
+        loot.setPos(possiblePositions.get(rand.nextInt(possiblePositions.size() - 1)).getX(),
+                possiblePositions.get(rand.nextInt(possiblePositions.size() - 1)).getY());
+        enemy.setPos(firstX + 100, firstY + 100);
     }
+
 
     @Override
     public void show() {
@@ -123,6 +121,17 @@ public class GameScreen implements Screen {
         s.getBatch().draw(mask, 0, 0);
         player.draw((SpriteBatch) s.getBatch());
         enemy.draw((SpriteBatch) s.getBatch());
+
+        currentTime = System.nanoTime();
+        long elapsedTime = currentTime - startTime;
+        double elapsedSeconds = (double) elapsedTime / 1_000_000_000.0;
+        System.out.println(elapsedSeconds);
+        if (elapsedSeconds > 3) {
+            startTime = System.nanoTime();
+            loot.setPos(possiblePositions.get(rand.nextInt(possiblePositions.size() - 1)).getX(),
+                    possiblePositions.get(rand.nextInt(possiblePositions.size() - 1)).getY());
+        }
+
         loot.draw((SpriteBatch) s.getBatch());
         s.getBatch().end();
     }
