@@ -91,10 +91,8 @@ public class GameScreen implements Screen {
 
             }
         }
-        System.out.println(Color.CLEAR.toString() + "\n" + Color.BLACK.toString());
 
         for (int i = 0; firstX == 0 && i < width; i++) {
-            System.out.println(movable[i][firstY]);
             if (movable[i][firstY]) {
                 firstX = i;
             }
@@ -125,7 +123,6 @@ public class GameScreen implements Screen {
         currentTime = System.nanoTime();
         long elapsedTime = currentTime - startTime;
         double elapsedSeconds = (double) elapsedTime / 1_000_000_000.0;
-        System.out.println(elapsedSeconds);
         if (elapsedSeconds > 3) {
             startTime = System.nanoTime();
             loot.setPos(possiblePositions.get(rand.nextInt(possiblePositions.size() - 1)).getX(),
