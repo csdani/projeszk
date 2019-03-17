@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
 import com.mygdx.game.screens.MenuScreen;
+import com.mygdx.game.screens.GameScreen;
 import com.mygdx.game.screens.MintaScreen;
 
 public class RoidRage extends Game{
